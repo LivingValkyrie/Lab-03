@@ -9,7 +9,7 @@ using System.Collections;
 /// Description: ObjectTypes 
 /// </summary>
 [System.Serializable]
-public class ObjectTypes : MonoBehaviour {
+public class ObjectTypes {
     #region Fields
 
     public ObjectType type;

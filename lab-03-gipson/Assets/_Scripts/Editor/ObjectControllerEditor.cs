@@ -9,7 +9,7 @@ using UnityEditor;
 /// 
 /// Description: ObjectControllerEditor is a custom editor
 /// </summary>
-[CustomEditor(typeof(ObjectController))]
+[CustomEditor(typeof (ObjectController))]
 public class ObjectControllerEditor : Editor {
     #region Fields
 
@@ -18,16 +18,29 @@ public class ObjectControllerEditor : Editor {
     #endregion
 
     void Awake() {
-         controller = (ObjectController) target;
+        controller = (ObjectController) target;
     }
 
-    public override void OnInspectorGUI(){
-			
-		//DrawDefaultInspector();
+    public override void OnInspectorGUI() {
+        //DrawDefaultInspector();
 
         serializedObject.Update();
-        serializedObject.ApplyModifiedProperties();
 
-    } 
+        SerializedProperty controller = serializedObject.FindProperty("controllerObjects");
+
+        EditorGUILayout.PropertyField(controller);
+        EditorGUILayout.PropertyField(controller.FindPropertyRelative("Array.size"));
+
+        if (controller.isExpanded) {
+            EditorGUI.indentLevel++;
+            for ( int i = 0; i < controller.arraySize; i++ ) {
+                EditorGUILayout.PropertyField( controller.GetArrayElementAtIndex( i ) );
+            }
+        }
+        EditorGUI.indentLevel--;
+        
+
+        serializedObject.ApplyModifiedProperties();
+    }
 
 }
